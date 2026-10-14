@@ -16,11 +16,14 @@ function cleanPrivateKey(raw) {
   const beginIndex = key.indexOf(begin);
   const endIndex = key.indexOf(end);
 
-  if (beginIndex === -1 || endIndex === -1 || endIndex <= beginIndex) {
+  if (endIndex === -1) {
     return key;
   }
 
-  const body = key.slice(beginIndex + begin.length, endIndex).replace(/\s+/g, "");
+  const bodyStart = beginIndex === -1 ? 0 : beginIndex + begin.length;
+  const body = key
+    .slice(bodyStart, endIndex)
+    .replace(/[^A-Za-z0-9+/=]/g, "");
   const lines = body.match(/.{1,64}/g) || [];
   return begin + "\n" + lines.join("\n") + "\n" + end + "\n";
 }
@@ -96,16 +99,6 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error("Dialogflow request failed:", err && err.message ? err.message : err);
-    const raw = process.env.DIALOGFLOW_PRIVATE_KEY || "";
-    res.status(500).json({
-      error: "Could not reach the assistant right now.",
-      debug: err && err.message ? err.message : String(err),
-      rawLen: raw.length,
-      rawFirst30: raw.slice(0, 30),
-      rawLast30: raw.slice(-30),
-      hasBegin: privateKey.includes("-----BEGIN PRIVATE KEY-----"),
-      hasEnd: privateKey.includes("-----END PRIVATE KEY-----"),
-      cleanLen: privateKey.length,
-    });
+    res.status(500).json({ error: "Could not reach the assistant right now." });
   }
 };
