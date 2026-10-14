@@ -82,9 +82,13 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error("Dialogflow request failed:", err && err.message ? err.message : err);
-    console.error("Key starts with BEGIN marker:", privateKey.startsWith("-----BEGIN PRIVATE KEY-----"));
-    console.error("Key ends with END marker:", privateKey.trim().endsWith("-----END PRIVATE KEY-----"));
-    console.error("Project id set:", Boolean(projectId), "Client email set:", Boolean(clientEmail));
-    res.status(500).json({ error: "Could not reach the assistant right now." });
+    res.status(500).json({
+      error: "Could not reach the assistant right now.",
+      debug: err && err.message ? err.message : String(err),
+      keyBegin: privateKey.startsWith("-----BEGIN PRIVATE KEY-----"),
+      keyEnd: privateKey.trim().endsWith("-----END PRIVATE KEY-----"),
+      projectId: projectId,
+      clientEmail: clientEmail,
+    });
   }
 };
