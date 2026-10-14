@@ -96,6 +96,16 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error("Dialogflow request failed:", err && err.message ? err.message : err);
-    res.status(500).json({ error: "Could not reach the assistant right now." });
+    const raw = process.env.DIALOGFLOW_PRIVATE_KEY || "";
+    res.status(500).json({
+      error: "Could not reach the assistant right now.",
+      debug: err && err.message ? err.message : String(err),
+      rawLen: raw.length,
+      rawFirst30: raw.slice(0, 30),
+      rawLast30: raw.slice(-30),
+      hasBegin: privateKey.includes("-----BEGIN PRIVATE KEY-----"),
+      hasEnd: privateKey.includes("-----END PRIVATE KEY-----"),
+      cleanLen: privateKey.length,
+    });
   }
 };
