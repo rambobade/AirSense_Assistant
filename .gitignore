@@ -1,0 +1,11 @@
+node_modules/
+.vercel
+.env
+.env.local
+*.log
+.DS_Store
+
+# Service account keys - never commit these
+airsense-assistant-*.json
+*service-account*.json
+*serviceaccount*.json

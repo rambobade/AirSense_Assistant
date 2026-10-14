@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AirSense - Air Quality Monitoring for Mumbai</title>
+  <meta name="description" content="AirSense is a college project that monitors air quality in the Mumbai region and answers questions through a chatbot." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <h1>AirSense</h1>
+      <p class="tagline">Air quality monitoring and AQI assistant for the Mumbai region.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="section">
+      <h2>About the project</h2>
+      <p>
+        AirSense is a final-year project that collects air-quality readings from monitoring stations
+        around Mumbai and turns them into easy-to-read AQI information. It calculates the Indian
+        National AQI using CPCB-style breakpoints, estimates short-term AQI changes, and maps
+        pollution hotspots using GIS interpolation. This page is the project's web front end, and the
+        assistant at the bottom answers questions using the AirSense Dialogflow agent.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Project information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Region</span>
+          <span class="info-value">Mumbai, India</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Pollutants</span>
+          <span class="info-value">PM2.5, PM10, NO&#8322;, SO&#8322;, CO, O&#8323;</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">AQI standard</span>
+          <span class="info-value">Indian National AQI (CPCB)</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Forecast model</span>
+          <span class="info-value">Random Forest</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Data sources</span>
+          <span class="info-value">OpenAQ and Open-Meteo</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Course</span>
+          <span class="info-value">B.E. Information Technology, Major Project-I</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>AQI categories</h2>
+      <p class="muted">Air quality is reported using the Indian National AQI scale.</p>
+      <ul class="aqi-scale">
+        <li><span class="aqi-badge good">Good</span> 0 - 50</li>
+        <li><span class="aqi-badge satisfactory">Satisfactory</span> 51 - 100</li>
+        <li><span class="aqi-badge moderate">Moderate</span> 101 - 200</li>
+        <li><span class="aqi-badge poor">Poor</span> 201 - 300</li>
+        <li><span class="aqi-badge very-poor">Very Poor</span> 301 - 400</li>
+        <li><span class="aqi-badge severe">Severe</span> 401 - 500</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Ask AirSense</h2>
+      <p class="muted">Ask about AQI, pollutants, or how the project works.</p>
+
+      <div class="chat" id="chat">
+        <div class="messages" id="messages" aria-live="polite">
+          <div class="message bot">
+            <div class="bubble">Hi, I'm the AirSense assistant. Ask me anything about air quality or this project.</div>
+          </div>
+        </div>
+
+        <form class="chat-input" id="chat-form">
+          <input
+            type="text"
+            id="message-input"
+            name="message"
+            placeholder="Type your message..."
+            autocomplete="off"
+            aria-label="Type your message"
+          />
+          <button type="submit" id="send-button">Send</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>AirSense - AIDS Mini Project, Don Bosco Institute of Technology, Mumbai.</p>
+      
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

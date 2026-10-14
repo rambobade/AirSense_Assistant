@@ -1,0 +1,266 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f6f6f3;
+  color: #23282e;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0da;
+  padding: 28px 0 24px;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+}
+
+.tagline {
+  margin: 6px 0 0;
+  color: #5b636b;
+}
+
+/* Sections */
+.section {
+  padding: 28px 0;
+  border-bottom: 1px solid #e6e6e0;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.section p {
+  margin: 0 0 8px;
+}
+
+.muted {
+  color: #5b636b;
+  font-size: 15px;
+}
+
+/* Project information grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 24px;
+  margin-top: 6px;
+}
+
+.info-item {
+  border-top: 1px solid #e6e6e0;
+  padding-top: 10px;
+}
+
+.info-label {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #7a828a;
+}
+
+.info-value {
+  display: block;
+  margin-top: 2px;
+}
+
+/* AQI scale */
+.aqi-scale {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+}
+
+.aqi-scale li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ecece6;
+  font-size: 15px;
+}
+
+.aqi-scale li:last-child {
+  border-bottom: none;
+}
+
+.aqi-badge {
+  display: inline-block;
+  min-width: 110px;
+  padding: 2px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  color: #23282e;
+}
+
+.aqi-badge.good { background: #b7e1b0; }
+.aqi-badge.satisfactory { background: #cde6a6; }
+.aqi-badge.moderate { background: #f4e08a; }
+.aqi-badge.poor { background: #f3bd86; }
+.aqi-badge.very-poor { background: #ef9a8a; }
+.aqi-badge.severe { background: #d98a9e; }
+
+/* Chat */
+.chat {
+  margin-top: 16px;
+  border: 1px solid #e0e0da;
+  border-radius: 6px;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.messages {
+  padding: 16px;
+  height: 320px;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.message.bot {
+  justify-content: flex-start;
+}
+
+.message.user {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 78%;
+  padding: 9px 13px;
+  border-radius: 12px;
+  font-size: 15px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.message.bot .bubble {
+  background: #f1f2ee;
+  color: #23282e;
+  border: 1px solid #e4e5df;
+  border-bottom-left-radius: 3px;
+}
+
+.message.user .bubble {
+  background: #2f6f4f;
+  color: #ffffff;
+  border-bottom-right-radius: 3px;
+}
+
+.message.pending .bubble {
+  color: #8a9199;
+  font-style: italic;
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid #e0e0da;
+  background: #fafaf8;
+}
+
+.chat-input input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font-size: 15px;
+  font-family: inherit;
+  border: 1px solid #cfd0ca;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #23282e;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: #2f6f4f;
+}
+
+.chat-input button {
+  padding: 10px 18px;
+  font-size: 15px;
+  font-family: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background: #2f6f4f;
+  border: 1px solid #2f6f4f;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input button:hover {
+  background: #275c42;
+}
+
+.chat-input button:disabled {
+  background: #9aab9f;
+  border-color: #9aab9f;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.site-footer {
+  padding: 22px 0 32px;
+  border-top: 1px solid #e0e0da;
+  background: #ffffff;
+  color: #5b636b;
+  font-size: 14px;
+}
+
+.site-footer p {
+  margin: 2px 0;
+}
+
+/* Small screens */
+@media (max-width: 560px) {
+  .site-header h1 {
+    font-size: 24px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .messages {
+    height: 300px;
+  }
+
+  .bubble {
+    max-width: 88%;
+  }
+
+  .chat-input {
+    flex-direction: column;
+  }
+
+  .chat-input button {
+    width: 100%;
+  }
+}
