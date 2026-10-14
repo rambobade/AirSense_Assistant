@@ -6,9 +6,23 @@ function cleanPrivateKey(raw) {
     (key.startsWith('"') && key.endsWith('"')) ||
     (key.startsWith("'") && key.endsWith("'"))
   ) {
-    key = key.slice(1, -1).trim();
+    key = key.slice(1, -1);
   }
-  return key.replace(/\\n/g, "\n").replace(/\r\n/g, "\n");
+
+  key = key.replace(/\\n/g, "\n").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+  const begin = "-----BEGIN PRIVATE KEY-----";
+  const end = "-----END PRIVATE KEY-----";
+  const beginIndex = key.indexOf(begin);
+  const endIndex = key.indexOf(end);
+
+  if (beginIndex === -1 || endIndex === -1 || endIndex <= beginIndex) {
+    return key;
+  }
+
+  const body = key.slice(beginIndex + begin.length, endIndex).replace(/\s+/g, "");
+  const lines = body.match(/.{1,64}/g) || [];
+  return begin + "\n" + lines.join("\n") + "\n" + end + "\n";
 }
 
 const projectId = (process.env.DIALOGFLOW_PROJECT_ID || "").trim();
@@ -82,13 +96,6 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error("Dialogflow request failed:", err && err.message ? err.message : err);
-    res.status(500).json({
-      error: "Could not reach the assistant right now.",
-      debug: err && err.message ? err.message : String(err),
-      keyBegin: privateKey.startsWith("-----BEGIN PRIVATE KEY-----"),
-      keyEnd: privateKey.trim().endsWith("-----END PRIVATE KEY-----"),
-      projectId: projectId,
-      clientEmail: clientEmail,
-    });
+    res.status(500).json({ error: "Could not reach the assistant right now." });
   }
 };
