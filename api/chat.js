@@ -1,8 +1,19 @@
 const dialogflow = require("@google-cloud/dialogflow");
 
-const projectId = process.env.DIALOGFLOW_PROJECT_ID;
-const clientEmail = process.env.DIALOGFLOW_CLIENT_EMAIL;
-const privateKey = (process.env.DIALOGFLOW_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+function cleanPrivateKey(raw) {
+  let key = (raw || "").trim();
+  if (
+    (key.startsWith('"') && key.endsWith('"')) ||
+    (key.startsWith("'") && key.endsWith("'"))
+  ) {
+    key = key.slice(1, -1).trim();
+  }
+  return key.replace(/\\n/g, "\n").replace(/\r\n/g, "\n");
+}
+
+const projectId = (process.env.DIALOGFLOW_PROJECT_ID || "").trim();
+const clientEmail = (process.env.DIALOGFLOW_CLIENT_EMAIL || "").trim();
+const privateKey = cleanPrivateKey(process.env.DIALOGFLOW_PRIVATE_KEY);
 const languageCode = process.env.DIALOGFLOW_LANGUAGE_CODE || "en";
 
 let sessionClient = null;
@@ -71,6 +82,9 @@ module.exports = async function handler(req, res) {
     });
   } catch (err) {
     console.error("Dialogflow request failed:", err && err.message ? err.message : err);
+    console.error("Key starts with BEGIN marker:", privateKey.startsWith("-----BEGIN PRIVATE KEY-----"));
+    console.error("Key ends with END marker:", privateKey.trim().endsWith("-----END PRIVATE KEY-----"));
+    console.error("Project id set:", Boolean(projectId), "Client email set:", Boolean(clientEmail));
     res.status(500).json({ error: "Could not reach the assistant right now." });
   }
 };
